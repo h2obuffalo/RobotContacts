@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
 import { TouchableHighlight, Stylesheet, View, Text, FlatList, Image } from 'react-native';
 import contactsList from '../assets/contacts.json';
+import axios from 'axios';
 
 class List extends Component {
     constructor(props){
         super(props);
 
         this.state= {
-            result: null,
+            list: null,
         };
 
         this.onPress = this.onPress.bind(this);
         this.renderItem = this.renderItem.bind(this);
+
     }
     static navigationOptions = {
         title:"Contacts",
@@ -20,17 +22,18 @@ class List extends Component {
 
     renderItem({item}) {
         return(
-                <View style={styles.contacts}>
-                    <TouchableHighlight
-                        style={styles.touch}
-                        onPress={() => this.onPress({item})}
-                        underlayColor='#e4e4e4'>
-                        <Text style={styles.contact}>
-                            {item.name}
-                        </Text>
-                    </TouchableHighlight>
-                </View>
-        )
+            <View style={styles.contacts}>
+            <TouchableHighlight
+                style={styles.touch}
+                onPress={() => this.onPress({item})}
+                underlayColor='#e4e4e4'
+            >
+            <Text style={styles.contact}>
+            {item.name}
+            </Text>
+            </TouchableHighlight>
+            </View>
+            )
     }
 
     keyExtractor(item, index) {
@@ -40,9 +43,9 @@ class List extends Component {
     renderSeparator(){
         return (
           <View
-            style={styles.separator}
+          style={styles.separator}
           />
-        );
+          );
     }
 
     onPress(item) {
@@ -51,15 +54,27 @@ class List extends Component {
         })
     }
 
+    componentDidMount(){
+       this.refreshData();
+    }
+
+    refreshData() {
+    axios.get("https://robocontacts.herokuapp.com/api/contacts?random").then(({data}) =>{
+          this.setState({list: data})
+        });
+    }
+
     render() {
         return(
             <FlatList
-                data={contactsList}
-                renderItem={this.renderItem}
-                keyExtractor={this.keyExtractor}
-                ItemSeparatorComponent={this.renderSeparator}
+            data={this.state.list}
+            renderItem={this.renderItem}
+            onRefesh={this.refreshData}
+            pullToRefresh={true}
+            keyExtractor={this.keyExtractor}
+            ItemSeparatorComponent={this.renderSeparator}
             />
-        )
+            )
     }
 }
 
@@ -75,21 +90,21 @@ const styles = {
         justifyContent:'center'
     },
     separator: {
-          height: 1,
-          width: "100%",
-          backgroundColor: "#ddd",
-          color:'#ddd',
-          marginLeft:10,
-    },
-    touch: {
-        backgroundColor:"#fff",
-        height:50,
-    },
-    contact: {
-        fontSize:18,
-        justifyContent:'center'
-    },
-    };
+      height: 1,
+      width: "100%",
+      backgroundColor: "#ddd",
+      color:'#ddd',
+      marginLeft:10,
+  },
+  touch: {
+    backgroundColor:"#fff",
+    height:50,
+},
+contact: {
+    fontSize:18,
+    justifyContent:'center'
+},
+};
 
 
 
