@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
-
+import { View, Text } from 'react-native';
+import Image from 'react-native-image-progress';
+// import ProgressBar from 'react-native-progress/Bar';
 
 class Detail extends Component {
     constructor(props){
@@ -11,7 +12,7 @@ class Detail extends Component {
         this.renderGender = this.renderGender.bind(this);
     }
     static navigationOptions = ({navigation}) => ({
-        title: navigation.getParam('Contact.item.name')
+        title: navigation.getParam('Contact').item.name
     })
 
     renderGender(gender) {
@@ -24,9 +25,9 @@ class Detail extends Component {
 
 render() {
     const contact = this.props.navigation.getParam('Contact');
-    let {name, picture, gender, filmName, address, company, film, filmURL} = contact.item;
+    const {name, picture, gender, filmName, address, company, film, filmURL} = contact.item;
+    const pronoun = (gender !== 'female') ? "He" : "She";
 
-    console.log(gender);
     return(
         <View style={styles.container} >
             <View style={styles.image} >
@@ -35,9 +36,9 @@ render() {
             <View style={styles.profile} >
             <Text style={styles.text}>
             {name} is {gender}{"\n"}
-            {this.renderGender(gender)} lives at {address} {"\n"}
-            {this.renderGender(gender)} works at {company.toUpperCase()}. {"\n"}
-            {(this.renderGender(gender) !== "he") ? "his" : "her"} favourite film is {filmName}.{"\n"}
+            {pronoun} lives at {address} {"\n"}
+            {pronoun} works at {company.toUpperCase()}. {"\n"}
+            {(gender !== 'female') ? "His" : "Her"} favourite film is {filmName}.{"\n"}
             </Text>
             </View>
         </View>

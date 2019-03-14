@@ -27,6 +27,7 @@ const RootNavigator = createStackNavigator({
       backgroundColor: '#2a3daa',
       textAlign:'center',
       justifyText:'center',
+      alignContent:'center',
     },
     headerTintColor: '#ffffff'
   }
