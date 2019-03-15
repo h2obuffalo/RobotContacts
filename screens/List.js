@@ -29,9 +29,7 @@ class List extends Component {
 
     renderSeparator(){
         return (
-          <View
-          style={styles.separator}
-          />
+          <View style={styles.separator} />
           );
     }
 

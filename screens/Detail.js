@@ -9,19 +9,11 @@ class Detail extends Component {
         this.state = {
             Contact: null,
         }
-        this.renderGender = this.renderGender.bind(this);
     }
+
     static navigationOptions = ({navigation}) => ({
         title: navigation.getParam('Contact').item.name
     })
-
-    renderGender(gender) {
-        if(gender === "male") {
-           return <Text>He</Text>;
-       } else {
-        return (<Text>She</Text>);
-    }
-}
 
 render() {
     const contact = this.props.navigation.getParam('Contact');

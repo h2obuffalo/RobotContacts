@@ -22,13 +22,13 @@ const RootNavigator = createStackNavigator({
   Detail: Detail,
 }, {
   defaultNavigationOptions: {
+    headerTitleStyle: { flex:1, textAlign: 'center'},
     title:'Contacts',
+
     headerStyle: {
       backgroundColor: '#2a3daa',
-      textAlign:'center',
-      justifyText:'center',
-      alignContent:'center',
     },
+
     headerTintColor: '#ffffff'
   }
 });
